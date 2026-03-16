@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'modules/cart/cart_controller.dart';
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';
 
@@ -18,6 +19,9 @@ void main() {
       systemNavigationBarColor: Color(0xFF0A0A0F),
     ),
   );
+
+  // ✅ Register CartController permanently — survives all screen navigation
+  Get.put(CartController(), permanent: true);
 
   runApp(const RestaurantApp());
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:restaurant/routes/app_routes.dart';
 import '../../core/app_colors.dart';
 import '../../core/app_dimensions.dart';
 import '../../core/app_image.dart';
@@ -53,7 +54,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SliverPadding(
                   padding: EdgeInsets.fromLTRB(
-                    dim.pagePadding, 0,
+                    dim.pagePadding,
+                    0,
                     dim.pagePadding,
                     dim.h(120),
                   ),
@@ -120,7 +122,10 @@ class _TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        dim.pagePadding, dim.h(16), dim.pagePadding, dim.h(8),
+        dim.pagePadding,
+        dim.h(16),
+        dim.pagePadding,
+        dim.h(8),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,7 +192,7 @@ class _TopBar extends StatelessWidget {
               SizedBox(width: dim.w(10)),
               // Cart with badge
               GestureDetector(
-                onTap: () {},
+onTap: () => Get.toNamed(AppRoutes.cart),
                 child: Container(
                   width: dim.w(40),
                   height: dim.w(40),
@@ -240,7 +245,10 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        dim.pagePadding, dim.h(4), dim.pagePadding, dim.h(16),
+        dim.pagePadding,
+        dim.h(4),
+        dim.pagePadding,
+        dim.h(16),
       ),
       child: Container(
         height: dim.h(52),
@@ -330,26 +338,20 @@ class _CategoryRow extends StatelessWidget {
                   vertical: dim.h(8),
                 ),
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppColors.primary
-                      : AppColors.surfaceLight,
+                  color:
+                      isSelected ? AppColors.primary : AppColors.surfaceLight,
                   borderRadius: BorderRadius.circular(dim.w(10)),
                   border: Border.all(
-                    color: isSelected
-                        ? AppColors.primary
-                        : AppColors.glassBorder,
+                    color:
+                        isSelected ? AppColors.primary : AppColors.glassBorder,
                   ),
                 ),
                 child: Text(
                   controller.categories[index],
                   style: TextStyle(
-                    color: isSelected
-                        ? Colors.white
-                        : AppColors.textSecondary,
+                    color: isSelected ? Colors.white : AppColors.textSecondary,
                     fontSize: dim.f(12),
-                    fontWeight: isSelected
-                        ? FontWeight.w600
-                        : FontWeight.w400,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                   ),
                 ),
               ),
@@ -373,7 +375,10 @@ class _PromoBanner extends StatelessWidget {
     return Container(
       height: dim.h(140),
       margin: EdgeInsets.fromLTRB(
-        dim.pagePadding, dim.h(20), dim.pagePadding, 0,
+        dim.pagePadding,
+        dim.h(20),
+        dim.pagePadding,
+        0,
       ),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
@@ -386,7 +391,9 @@ class _PromoBanner extends StatelessWidget {
           children: [
             // Right glow
             Positioned(
-              right: 0, top: 0, bottom: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
               child: Container(
                 width: dim.w(160),
                 decoration: const BoxDecoration(
@@ -398,7 +405,9 @@ class _PromoBanner extends StatelessWidget {
             ),
             // Food image
             Positioned(
-              right: 0, top: 0, bottom: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
               child: AppImage(
                 path: 'assets/images/onboarding/food_ramen.jpg',
                 width: dim.w(130),
@@ -408,7 +417,9 @@ class _PromoBanner extends StatelessWidget {
             ),
             // Dark fade over image
             Positioned(
-              right: 0, top: 0, bottom: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
               child: Container(
                 width: dim.w(130),
                 decoration: const BoxDecoration(
@@ -431,7 +442,8 @@ class _PromoBanner extends StatelessWidget {
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: dim.w(8), vertical: dim.h(3),
+                      horizontal: dim.w(8),
+                      vertical: dim.h(3),
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.primary,
@@ -469,7 +481,8 @@ class _PromoBanner extends StatelessWidget {
                   SizedBox(height: dim.h(10)),
                   Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: dim.w(10), vertical: dim.h(4),
+                      horizontal: dim.w(10),
+                      vertical: dim.h(4),
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.background,
@@ -517,7 +530,10 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        dim.pagePadding, dim.h(24), dim.pagePadding, dim.h(14),
+        dim.pagePadding,
+        dim.h(24),
+        dim.pagePadding,
+        dim.h(14),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -560,16 +576,16 @@ class _PopularFoodsRow extends StatelessWidget {
     return SizedBox(
       height: dim.h(210),
       child: Obx(() => ListView.separated(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: dim.pagePadding),
-        itemCount: controller.filteredFoods.length,
-        separatorBuilder: (_, __) => SizedBox(width: dim.w(14)),
-        itemBuilder: (context, index) => _FoodCard(
-          dim: dim,
-          food: controller.filteredFoods[index],
-        ),
-      )),
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: dim.pagePadding),
+            itemCount: controller.filteredFoods.length,
+            separatorBuilder: (_, __) => SizedBox(width: dim.w(14)),
+            itemBuilder: (context, index) => _FoodCard(
+              dim: dim,
+              food: controller.filteredFoods[index],
+            ),
+          )),
     );
   }
 }
@@ -585,7 +601,12 @@ class _FoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.toNamed(
+          AppRoutes.foodDetail,
+          arguments: food,
+        );
+      },
       child: Container(
         width: dim.w(150),
         decoration: BoxDecoration(
@@ -730,7 +751,8 @@ class _RestaurantCard extends StatelessWidget {
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(
-                          horizontal: dim.w(8), vertical: dim.h(3),
+                          horizontal: dim.w(8),
+                          vertical: dim.h(3),
                         ),
                         decoration: BoxDecoration(
                           color: restaurant.isOpen
@@ -835,9 +857,9 @@ class _LiquidGlassNavState extends State<_LiquidGlassNav>
   late Animation<double> _bubbleAnim;
 
   final List<_NavData> _items = const [
-    _NavData(iconPath: AppIcons.home,    label: 'Home'),
-    _NavData(iconPath: AppIcons.search,  label: 'Search'),
-    _NavData(iconPath: AppIcons.cart,    label: 'Cart'),
+    _NavData(iconPath: AppIcons.home, label: 'Home'),
+    _NavData(iconPath: AppIcons.search, label: 'Search'),
+    _NavData(iconPath: AppIcons.cart, label: 'Cart'),
     _NavData(iconPath: AppIcons.profile, label: 'Profile'),
   ];
 
@@ -862,11 +884,10 @@ class _LiquidGlassNavState extends State<_LiquidGlassNav>
   }
 
   void _onTap(int index) {
-    setState(() => _active = index);
-    _bubbleCtrl
-      ..reset()
-      ..forward();
-  }
+  setState(() => _active = index);
+  _bubbleCtrl..reset()..forward();
+  if (index == 2) Get.toNamed(AppRoutes.cart);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -1065,6 +1086,7 @@ class _InactiveIcon extends StatelessWidget {
     );
   }
 }
+
 // ─────────────────────────────────────────────
 // Nav data model — uses asset path
 // ─────────────────────────────────────────────

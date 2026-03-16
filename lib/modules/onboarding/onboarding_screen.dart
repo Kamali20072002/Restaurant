@@ -97,13 +97,13 @@ class _TopBar extends StatelessWidget {
             children: [
               Image.asset(
                 AppAssets.logoIcon,
-                width: dim.w(28),
-                height: dim.w(28),
+                width: dim.w(32),
+                height: dim.w(32),
                 fit: BoxFit.contain,
                 errorBuilder: (_, __, ___) =>
-                    Text('🍽️', style: TextStyle(fontSize: dim.w(22))),
+                    Text('🍽️', style: TextStyle(fontSize: dim.w(24))),
               ),
-              SizedBox(width: dim.w(6)),
+              SizedBox(width: dim.w(8)),
               RichText(
                 text: TextSpan(
                   children: [
@@ -111,7 +111,7 @@ class _TopBar extends StatelessWidget {
                       text: 'Night',
                       style: TextStyle(
                         fontFamily: 'serif',
-                        fontSize: dim.f(18),
+                        fontSize: dim.f(20),
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
@@ -120,7 +120,7 @@ class _TopBar extends StatelessWidget {
                       text: 'Bite',
                       style: TextStyle(
                         fontFamily: 'serif',
-                        fontSize: dim.f(18),
+                        fontSize: dim.f(20),
                         fontWeight: FontWeight.w900,
                         color: AppColors.primary,
                       ),
@@ -138,8 +138,8 @@ class _TopBar extends StatelessWidget {
                 onTap: controller.goToHome,
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: dim.w(14),
-                    vertical: dim.h(7),
+                    horizontal: dim.w(16),
+                    vertical: dim.h(8),
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.glassFill,
@@ -150,7 +150,7 @@ class _TopBar extends StatelessWidget {
                     'Skip',
                     style: TextStyle(
                       color: AppColors.textSecondary,
-                      fontSize: dim.f(12),
+                      fontSize: dim.f(13),
                     ),
                   ),
                 ),
@@ -338,7 +338,7 @@ class _GlassChip extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────
-// Bottom content — reacts to page changes
+// Bottom content
 // ─────────────────────────────────────────────
 class _BottomContent extends StatelessWidget {
   final AppDimensionData dim;
@@ -355,7 +355,7 @@ class _BottomContent extends StatelessWidget {
         dim.pagePadding,
         0,
         dim.pagePadding,
-        dim.h(48) + dim.bottomPadding,
+        dim.h(40) + dim.bottomPadding,
       ),
       child: Obx(() {
         final content = controller.currentContent;
@@ -363,7 +363,7 @@ class _BottomContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // Tagline
+            // ── Tagline
             Text(
               content['tagline']!,
               style: AppTextStyles.label.copyWith(
@@ -372,7 +372,7 @@ class _BottomContent extends StatelessWidget {
             ),
             SizedBox(height: dim.h(10)),
 
-            // Title — animates on page change
+            // ── Title
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 350),
               transitionBuilder: (child, anim) => FadeTransition(
@@ -414,7 +414,7 @@ class _BottomContent extends StatelessWidget {
 
             SizedBox(height: dim.h(12)),
 
-            // Subtitle
+            // ── Subtitle
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 350),
               child: Text(
@@ -428,87 +428,106 @@ class _BottomContent extends StatelessWidget {
 
             SizedBox(height: dim.h(28)),
 
-            // Back + Next buttons row
+            // ── Buttons row
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
-                // Back button — hidden on first page
+                // Back button — circular, same height as Next
                 AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 250),
+                  transitionBuilder: (child, anim) => FadeTransition(
+                    opacity: anim,
+                    child: ScaleTransition(scale: anim, child: child),
+                  ),
                   child: controller.isFirstPage
                       ? SizedBox(
                           key: const ValueKey('no_back'),
-                          width: dim.w(52),
+                          width: dim.w(56),
+                          height: dim.w(56),
                         )
                       : GestureDetector(
                           key: const ValueKey('back_btn'),
                           onTap: controller.previousPage,
                           child: Container(
-                            width: dim.w(52),
-                            height: dim.h(56),
+                            width: dim.w(56),
+                            height: dim.w(56),
                             decoration: BoxDecoration(
                               color: AppColors.surfaceLight,
-                              borderRadius: BorderRadius.circular(dim.w(16)),
+                              shape: BoxShape.circle,
                               border: Border.all(
                                 color: AppColors.glassBorder,
                               ),
                             ),
-                            child: const Center(
-                              child: Text(
-                                '←',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
+                            child: Center(
+                              child: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: Colors.white,
+                                size: dim.w(16),
                               ),
                             ),
                           ),
                         ),
                 ),
 
-                SizedBox(width: dim.w(12)),
+                SizedBox(width: dim.w(14)),
 
-                // Next / Get Started button
+                // Next / Get Started pill button
                 Expanded(
-                  child: SizedBox(
-                    height: dim.h(56),
-                    child: ElevatedButton(
-                      onPressed: controller.nextPage,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: AppColors.textPrimary,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(dim.w(18)),
+                  child: Container(
+                    height: dim.w(56),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(dim.w(56)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.4),
+                          blurRadius: 20,
+                          spreadRadius: 0,
+                          offset: const Offset(0, 6),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            controller.isLastPage
-                                ? 'Get Started'
-                                : 'Next',
-                            style: AppTextStyles.button.copyWith(
-                              fontSize: dim.f(16),
-                            ),
-                          ),
-                          SizedBox(width: dim.w(10)),
-                          Container(
-                            width: dim.w(28),
-                            height: dim.w(28),
-                            decoration: BoxDecoration(
-                              color: Colors.white24,
-                              borderRadius: BorderRadius.circular(dim.w(14)),
-                            ),
-                            child: Center(
-                              child: Text(
-                                controller.isLastPage ? '🚀' : '→',
-                                style: TextStyle(fontSize: dim.f(13)),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(dim.w(56)),
+                        onTap: controller.nextPage,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              controller.isLastPage
+                                  ? 'Get Started'
+                                  : 'Next',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: dim.f(16),
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.3,
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(width: dim.w(10)),
+                            Container(
+                              width: dim.w(32),
+                              height: dim.w(32),
+                              decoration: BoxDecoration(
+                                color: Colors.white
+                                    .withValues(alpha: 0.2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  controller.isLastPage
+                                      ? Icons.rocket_launch_rounded
+                                      : Icons.arrow_forward_rounded,
+                                  color: Colors.white,
+                                  size: dim.w(15),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -518,7 +537,7 @@ class _BottomContent extends StatelessWidget {
 
             SizedBox(height: dim.h(20)),
 
-            // Page indicator dots
+            // ── Page indicator dots
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -532,7 +551,9 @@ class _BottomContent extends StatelessWidget {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
-                    margin: EdgeInsets.symmetric(horizontal: dim.w(4)),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: dim.w(4),
+                    ),
                     width: controller.currentPage.value == i
                         ? dim.w(22)
                         : dim.w(6),

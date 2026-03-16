@@ -7,6 +7,11 @@ class FoodModel {
   final double rating;
   final int deliveryMinutes;
   final bool isPopular;
+  final String description;
+  final List<String> ingredients;
+  final int calories;
+  final List<String> sizes;
+  final List<String> spiceLevels;
 
   const FoodModel({
     required this.id,
@@ -17,5 +22,10 @@ class FoodModel {
     required this.rating,
     required this.deliveryMinutes,
     this.isPopular = false,
+    this.description = '',
+    this.ingredients = const [],
+    this.calories = 0,
+    this.sizes = const ['Small', 'Medium', 'Large'],
+    this.spiceLevels = const ['Mild', 'Medium', 'Hot'],
   });
 }
