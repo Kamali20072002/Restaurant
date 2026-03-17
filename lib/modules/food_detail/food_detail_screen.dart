@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_food_delivery_ui/modules/cart/cart_controller.dart';
 import 'package:get/get.dart';
-import 'package:restaurant/modules/cart/cart_controller.dart';
 import '../../core/app_colors.dart';
 import '../../core/app_dimensions.dart';
 import '../../core/app_image.dart';

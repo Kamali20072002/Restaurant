@@ -155,7 +155,7 @@ class _OSMMapViewState extends State<_OSMMapView> {
               TileLayer(
                 urlTemplate:
                     'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.example.restaurant',
+                userAgentPackageName: 'com.example.flutter_food_delivery_ui',
                 tileBuilder: _darkTile,
                 maxZoom: 19,
               ),

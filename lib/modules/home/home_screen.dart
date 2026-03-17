@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery_ui/routes/app_routes.dart';
 import 'package:get/get.dart';
-import 'package:restaurant/routes/app_routes.dart';
 import '../../core/app_colors.dart';
 import '../../core/app_dimensions.dart';
 import '../../core/app_image.dart';
@@ -192,7 +192,7 @@ class _TopBar extends StatelessWidget {
               SizedBox(width: dim.w(10)),
               // Cart with badge
               GestureDetector(
-onTap: () => Get.toNamed(AppRoutes.cart),
+                onTap: () => Get.toNamed(AppRoutes.cart),
                 child: Container(
                   width: dim.w(40),
                   height: dim.w(40),
@@ -299,6 +299,7 @@ class _SearchBar extends StatelessWidget {
     );
   }
 }
+
 // ─────────────────────────────────────────────
 // Category chips
 // ─────────────────────────────────────────────
@@ -875,13 +876,15 @@ class _LiquidGlassNavState extends State<_LiquidGlassNav>
     super.dispose();
   }
 
- void _onTap(int index) {
-  setState(() => _active = index);
-  _bubbleCtrl..reset()..forward();
-  if (index == 1) Get.toNamed(AppRoutes.search);
-  if (index == 2) Get.toNamed(AppRoutes.cart);
-  if (index == 3) Get.toNamed(AppRoutes.profile);
-}
+  void _onTap(int index) {
+    setState(() => _active = index);
+    _bubbleCtrl
+      ..reset()
+      ..forward();
+    if (index == 1) Get.toNamed(AppRoutes.search);
+    if (index == 2) Get.toNamed(AppRoutes.cart);
+    if (index == 3) Get.toNamed(AppRoutes.profile);
+  }
 
   @override
   Widget build(BuildContext context) {

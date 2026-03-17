@@ -1,5 +1,5 @@
-name: restaurant
-description: A premium dark food delivery app.
+name: flutter_food_delivery_ui
+description: A complete Flutter food delivery app UI kit with restaurant ordering flow.
 publish_to: 'none'
 version: 1.0.0+1
 
