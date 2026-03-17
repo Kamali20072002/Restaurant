@@ -233,9 +233,6 @@ onTap: () => Get.toNamed(AppRoutes.cart),
   }
 }
 
-// ─────────────────────────────────────────────
-// Search bar
-// ─────────────────────────────────────────────
 class _SearchBar extends StatelessWidget {
   final AppDimensionData dim;
   final HomeController controller;
@@ -250,63 +247,58 @@ class _SearchBar extends StatelessWidget {
         dim.pagePadding,
         dim.h(16),
       ),
-      child: Container(
-        height: dim.h(52),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
-          borderRadius: BorderRadius.circular(dim.w(16)),
-          border: Border.all(color: AppColors.glassBorder),
-        ),
-        child: Row(
-          children: [
-            SizedBox(width: dim.w(14)),
-            AppIcon(
-              path: AppIcons.search,
-              size: dim.w(18),
-              color: AppColors.textHint,
+      child: GestureDetector(
+        onTap: () => Get.toNamed(AppRoutes.search),
+        child: AbsorbPointer(
+          child: Container(
+            height: dim.h(52),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceLight,
+              borderRadius: BorderRadius.circular(dim.w(16)),
+              border: Border.all(color: AppColors.glassBorder),
             ),
-            SizedBox(width: dim.w(10)),
-            Expanded(
-              child: TextField(
-                onChanged: controller.onSearchChanged,
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: dim.f(14),
+            child: Row(
+              children: [
+                SizedBox(width: dim.w(14)),
+                AppIcon(
+                  path: AppIcons.search,
+                  size: dim.w(18),
+                  color: AppColors.textHint,
                 ),
-                decoration: InputDecoration(
-                  hintText: 'Search food, restaurants...',
-                  hintStyle: TextStyle(
-                    color: AppColors.textHint,
-                    fontSize: dim.f(14),
+                SizedBox(width: dim.w(10)),
+                Expanded(
+                  child: Text(
+                    'Search food, restaurants...',
+                    style: TextStyle(
+                      color: AppColors.textHint,
+                      fontSize: dim.f(14),
+                    ),
                   ),
-                  border: InputBorder.none,
-                  isDense: true,
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(dim.w(7)),
-              width: dim.w(36),
-              height: dim.w(36),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(dim.w(10)),
-              ),
-              child: Center(
-                child: AppIcon(
-                  path: AppIcons.filter,
-                  size: dim.w(16),
-                  color: Colors.white,
+                Container(
+                  margin: EdgeInsets.all(dim.w(7)),
+                  width: dim.w(36),
+                  height: dim.w(36),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(dim.w(10)),
+                  ),
+                  child: Center(
+                    child: AppIcon(
+                      path: AppIcons.filter,
+                      size: dim.w(16),
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
-
 // ─────────────────────────────────────────────
 // Category chips
 // ─────────────────────────────────────────────
@@ -883,10 +875,12 @@ class _LiquidGlassNavState extends State<_LiquidGlassNav>
     super.dispose();
   }
 
-  void _onTap(int index) {
+ void _onTap(int index) {
   setState(() => _active = index);
   _bubbleCtrl..reset()..forward();
+  if (index == 1) Get.toNamed(AppRoutes.search);
   if (index == 2) Get.toNamed(AppRoutes.cart);
+  if (index == 3) Get.toNamed(AppRoutes.profile);
 }
 
   @override

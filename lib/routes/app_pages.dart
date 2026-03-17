@@ -10,6 +10,10 @@ import '../modules/cart/cart_screen.dart';
 import '../modules/order_tracking/order_tracking_binding.dart';
 import '../modules/order_tracking/order_tracking_screen.dart';
 import 'app_routes.dart';
+import '../modules/profile/profile_binding.dart';
+import '../modules/profile/profile_screen.dart';
+import '../modules/search/search_binding.dart';
+import '../modules/search/search_screen.dart';
 
 class AppPages {
   AppPages._();
@@ -54,5 +58,20 @@ class AppPages {
       transition: Transition.downToUp,
       transitionDuration: const Duration(milliseconds: 450),
     ),
+    // Add to pages list:
+GetPage(
+  name: AppRoutes.profile,
+  page: () => const ProfileScreen(),
+  binding: ProfileBinding(),
+  transition: Transition.rightToLeft,
+  transitionDuration: const Duration(milliseconds: 350),
+),
+GetPage(
+  name: AppRoutes.search,
+  page: () => const SearchScreen(),
+  binding: SearchBinding(),
+  transition: Transition.fadeIn,
+  transitionDuration: const Duration(milliseconds: 300),
+),
   ];
 }
