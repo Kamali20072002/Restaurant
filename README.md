@@ -29,15 +29,24 @@ This project is built using **Vibe Coding with AI agents**, focusing on rapid de
 ## 📸 App Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/6181431282072489628.jpg" width="250"/>
-  <img src="assets/screenshots/6181431282072489629.jpg" width="250"/>
-  <img src="assets/screenshots/6181431282072489630.jpg" width="250"/>
+  <img src="assets/screenshots/6181431282072489628.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489629.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489630.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489631.jpg" width="220"/>
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/6181431282072489631.jpg" width="250"/>
-  <img src="assets/screenshots/6181431282072489632.jpg" width="250"/>
-  <img src="assets/screenshots/6181431282072489633.jpg" width="250"/>
+  <img src="assets/screenshots/6181431282072489632.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489633.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489634.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489635.jpg" width="220"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/6181431282072489636.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489637.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489638.jpg" width="220"/>
+  <img src="assets/screenshots/6181431282072489639.jpg" width="220"/>
 </p>
 
 ---
