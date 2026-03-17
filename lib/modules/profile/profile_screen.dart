@@ -112,12 +112,12 @@ class _ProfileHeader extends StatelessWidget {
         dim.pagePadding,
         dim.h(28),
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            const Color(0xFF15152A),
+            Color(0xFF15152A),
             AppColors.background,
           ],
         ),

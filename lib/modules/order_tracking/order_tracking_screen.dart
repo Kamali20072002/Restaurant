@@ -89,16 +89,20 @@ class _OSMMapViewState extends State<_OSMMapView> {
 
     // Route loaded from OSRM
     ever(widget.controller.routePoints, (_) {
-      if (mounted) setState(() {
+      if (mounted) {
+        setState(() {
         _completedRoute = widget.controller.completedRoute;
       });
+      }
     });
 
     // Progress updates
     ever(widget.controller.bikeProgress, (double _) {
-      if (mounted) setState(() {
+      if (mounted) {
+        setState(() {
         _completedRoute = widget.controller.completedRoute;
       });
+      }
     });
   }
 
@@ -245,7 +249,7 @@ class _OSMMapViewState extends State<_OSMMapView> {
                   top: 0, left: 0, right: 0, bottom: 0,
                   child: Container(
                     color: Colors.black.withValues(alpha: 0.35),
-                    child: Center(
+                    child: const Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -257,8 +261,8 @@ class _OSMMapViewState extends State<_OSMMapView> {
                               strokeWidth: 2.5,
                             ),
                           ),
-                          const SizedBox(height: 12),
-                          const Text(
+                          SizedBox(height: 12),
+                          Text(
                             'Loading route...',
                             style: TextStyle(
                               color: Colors.white,
