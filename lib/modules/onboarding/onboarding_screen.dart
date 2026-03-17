@@ -20,7 +20,7 @@ class OnboardingScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // ── Background image changes with swipe
+          // ── 1. Background image
           Obx(() => AnimatedSwitcher(
             duration: const Duration(milliseconds: 500),
             child: AppImage(
@@ -32,7 +32,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
           )),
 
-          // ── Dark gradient overlay
+          // ── 2. Dark gradient overlay
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -48,22 +48,33 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
 
-          // ── Swipeable page view — full screen
-          PageView.builder(
-            controller: controller.pageController,
-            onPageChanged: controller.onPageChanged,
-            itemCount: controller.pages.length,
-            itemBuilder: (context, index) => const SizedBox.expand(),
+          // ── 3. PageView full screen swipe handler
+          Positioned.fill(
+            child: PageView.builder(
+              controller: controller.pageController,
+              onPageChanged: controller.onPageChanged,
+              itemCount: controller.pages.length,
+              itemBuilder: (context, index) => const SizedBox.expand(),
+            ),
           ),
 
-          // ── Static UI overlay on top of PageView
+          // ── 4. UI overlay
           SafeArea(
             child: Column(
               children: [
                 _TopBar(dim: dim),
-                const Spacer(),
-                _FoodCircleOverlay(dim: dim, controller: controller),
-                SizedBox(height: dim.h(32)),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      _FoodCircleOverlay(
+                        dim: dim,
+                        controller: controller,
+                      ),
+                      SizedBox(height: dim.h(32)),
+                    ],
+                  ),
+                ),
                 _BottomContent(dim: dim, controller: controller),
               ],
             ),
@@ -75,7 +86,7 @@ class OnboardingScreen extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────
-// Top bar — logo + skip
+// Top bar
 // ─────────────────────────────────────────────
 class _TopBar extends StatelessWidget {
   final AppDimensionData dim;
@@ -92,46 +103,45 @@ class _TopBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Logo
-          Row(
-            children: [
-              Image.asset(
-                AppAssets.logoIcon,
-                width: dim.w(32),
-                height: dim.w(32),
-                fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) =>
-                    Text('🍽️', style: TextStyle(fontSize: dim.w(24))),
-              ),
-              SizedBox(width: dim.w(8)),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Night',
-                      style: TextStyle(
-                        fontFamily: 'serif',
-                        fontSize: dim.f(20),
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Bite',
-                      style: TextStyle(
-                        fontFamily: 'serif',
-                        fontSize: dim.f(20),
-                        fontWeight: FontWeight.w900,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ],
+          IgnorePointer(
+            child: Row(
+              children: [
+                Image.asset(
+                  AppAssets.logoIcon,
+                  width: dim.w(32),
+                  height: dim.w(32),
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) =>
+                      Text('🍽️', style: TextStyle(fontSize: dim.w(24))),
                 ),
-              ),
-            ],
+                SizedBox(width: dim.w(8)),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Night',
+                        style: TextStyle(
+                          fontFamily: 'serif',
+                          fontSize: dim.f(20),
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Bite',
+                        style: TextStyle(
+                          fontFamily: 'serif',
+                          fontSize: dim.f(20),
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-
-          // Skip button
           Obx(() => controller.isLastPage
             ? const SizedBox.shrink()
             : GestureDetector(
@@ -207,99 +217,94 @@ class _FoodCircleOverlayState extends State<_FoodCircleOverlay>
     final d = widget.dim;
     final circleSize = d.w(160);
 
-    return SizedBox(
-      width: d.w(280),
-      height: d.w(280),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Outer ring
-          AnimatedBuilder(
-            animation: _ring2,
-            builder: (_, __) => Transform.rotate(
-              angle: -_ring2.value * 2 * math.pi,
+    return IgnorePointer(
+      child: SizedBox(
+        width: d.w(280),
+        height: d.w(280),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            AnimatedBuilder(
+              animation: _ring2,
+              builder: (_, __) => Transform.rotate(
+                angle: -_ring2.value * 2 * math.pi,
+                child: Container(
+                  width: d.w(260),
+                  height: d.w(260),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.gold.withValues(alpha: 0.15),
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            AnimatedBuilder(
+              animation: _ring1,
+              builder: (_, __) => Transform.rotate(
+                angle: _ring1.value * 2 * math.pi,
+                child: Container(
+                  width: d.w(215),
+                  height: d.w(215),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Obx(() => AnimatedSwitcher(
+              duration: const Duration(milliseconds: 400),
               child: Container(
-                width: d.w(260),
-                height: d.w(260),
+                key: ValueKey(widget.controller.currentPage.value),
+                width: circleSize,
+                height: circleSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: AppColors.gold.withValues(alpha: 0.15),
-                    width: 1,
+                    color: AppColors.primary.withValues(alpha: 0.4),
+                    width: 2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.25),
+                      blurRadius: 30,
+                      spreadRadius: 4,
+                    ),
+                  ],
+                ),
+                child: ClipOval(
+                  child: AppImage(
+                    path: widget.controller.currentContent['image']!,
+                    width: circleSize,
+                    height: circleSize,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
+            )),
+            Positioned(
+              top: d.w(30),
+              left: 0,
+              child: _GlassChip(label: '⭐  4.9 Rating', dim: d),
             ),
-          ),
-
-          // Inner ring
-          AnimatedBuilder(
-            animation: _ring1,
-            builder: (_, __) => Transform.rotate(
-              angle: _ring1.value * 2 * math.pi,
-              child: Container(
-                width: d.w(215),
-                height: d.w(215),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.primary.withValues(alpha: 0.3),
-                    width: 1,
-                  ),
-                ),
-              ),
+            Positioned(
+              top: d.w(72),
+              right: 0,
+              child: _GlassChip(label: '🚀  25 min', dim: d),
             ),
-          ),
-
-          // Center circle — switches on page change
-          Obx(() => AnimatedSwitcher(
-            duration: const Duration(milliseconds: 400),
-            child: Container(
-              key: ValueKey(widget.controller.currentPage.value),
-              width: circleSize,
-              height: circleSize,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.4),
-                  width: 2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.25),
-                    blurRadius: 30,
-                    spreadRadius: 4,
-                  ),
-                ],
-              ),
-              child: ClipOval(
-                child: AppImage(
-                  path: widget.controller.currentContent['image']!,
-                  width: circleSize,
-                  height: circleSize,
-                  fit: BoxFit.cover,
-                ),
-              ),
+            Positioned(
+              bottom: d.w(30),
+              left: d.w(8),
+              child: _GlassChip(label: '🔥  500+ Dishes', dim: d),
             ),
-          )),
-
-          // Glass chips
-          Positioned(
-            top: d.w(30),
-            left: 0,
-            child: _GlassChip(label: '⭐  4.9 Rating', dim: d),
-          ),
-          Positioned(
-            top: d.w(72),
-            right: 0,
-            child: _GlassChip(label: '🚀  25 min', dim: d),
-          ),
-          Positioned(
-            bottom: d.w(30),
-            left: d.w(8),
-            child: _GlassChip(label: '🔥  500+ Dishes', dim: d),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -352,8 +357,7 @@ class _BottomContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        dim.pagePadding,
-        0,
+        dim.pagePadding, 0,
         dim.pagePadding,
         dim.h(40) + dim.bottomPadding,
       ),
@@ -363,16 +367,12 @@ class _BottomContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ── Tagline
             Text(
               content['tagline']!,
-              style: AppTextStyles.label.copyWith(
-                fontSize: dim.f(11),
-              ),
+              style: AppTextStyles.label.copyWith(fontSize: dim.f(11)),
             ),
             SizedBox(height: dim.h(10)),
 
-            // ── Title
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 350),
               transitionBuilder: (child, anim) => FadeTransition(
@@ -414,26 +414,20 @@ class _BottomContent extends StatelessWidget {
 
             SizedBox(height: dim.h(12)),
 
-            // ── Subtitle
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 350),
               child: Text(
                 content['subtitle']!,
                 key: ValueKey('sub_${controller.currentPage.value}'),
-                style: AppTextStyles.body.copyWith(
-                  fontSize: dim.f(14),
-                ),
+                style: AppTextStyles.body.copyWith(fontSize: dim.f(14)),
               ),
             ),
 
             SizedBox(height: dim.h(28)),
 
-            // ── Buttons row
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
-                // Back button — circular, same height as Next
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
                   transitionBuilder: (child, anim) => FadeTransition(
@@ -455,9 +449,7 @@ class _BottomContent extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: AppColors.surfaceLight,
                               shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.glassBorder,
-                              ),
+                              border: Border.all(color: AppColors.glassBorder),
                             ),
                             child: Center(
                               child: Icon(
@@ -472,7 +464,6 @@ class _BottomContent extends StatelessWidget {
 
                 SizedBox(width: dim.w(14)),
 
-                // Next / Get Started pill button
                 Expanded(
                   child: Container(
                     height: dim.w(56),
@@ -497,9 +488,7 @@ class _BottomContent extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              controller.isLastPage
-                                  ? 'Get Started'
-                                  : 'Next',
+                              controller.isLastPage ? 'Get Started' : 'Next',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: dim.f(16),
@@ -512,8 +501,7 @@ class _BottomContent extends StatelessWidget {
                               width: dim.w(32),
                               height: dim.w(32),
                               decoration: BoxDecoration(
-                                color: Colors.white
-                                    .withValues(alpha: 0.2),
+                                color: Colors.white.withValues(alpha: 0.2),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
@@ -537,7 +525,6 @@ class _BottomContent extends StatelessWidget {
 
             SizedBox(height: dim.h(20)),
 
-            // ── Page indicator dots
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -551,9 +538,7 @@ class _BottomContent extends StatelessWidget {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
-                    margin: EdgeInsets.symmetric(
-                      horizontal: dim.w(4),
-                    ),
+                    margin: EdgeInsets.symmetric(horizontal: dim.w(4)),
                     width: controller.currentPage.value == i
                         ? dim.w(22)
                         : dim.w(6),

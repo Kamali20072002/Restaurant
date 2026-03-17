@@ -7,6 +7,8 @@ import '../../core/app_icons.dart';
 import '../../core/app_icon_widget.dart';
 import '../../data/models/cart_item_model.dart';
 import 'cart_controller.dart';
+import '../../routes/app_routes.dart';
+
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -891,7 +893,7 @@ class _PlaceOrderBar extends StatelessWidget {
         dim.pagePadding,
         dim.h(20) + dim.bottomPadding,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.background,
         border: Border(
           top: BorderSide(
@@ -901,19 +903,7 @@ class _PlaceOrderBar extends StatelessWidget {
         ),
       ),
       child: GestureDetector(
-        onTap: () {
-          // Will wire to order tracking in next step
-          Get.snackbar(
-            'Order Placed! 🎉',
-            'Your food is being prepared',
-            backgroundColor: AppColors.surfaceLight,
-            colorText: AppColors.textPrimary,
-            borderRadius: 12,
-            margin: EdgeInsets.all(dim.w(16)),
-            duration: const Duration(seconds: 2),
-            snackPosition: SnackPosition.TOP,
-          );
-        },
+        onTap: () => Get.toNamed(AppRoutes.orderTracking),
         child: Obx(() => Container(
           height: dim.h(56),
           decoration: BoxDecoration(
